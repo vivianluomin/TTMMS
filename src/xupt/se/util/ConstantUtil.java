@@ -6,7 +6,7 @@ public class ConstantUtil {
 	
 	public static LoginedUser loginedUser = null;
 	
-	public static int frmWidth=1024;
+	public static int frmWidth=1224;
 	public static int frmHeight=700;
 
 }

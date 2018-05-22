@@ -1,4 +1,4 @@
-package xupt.set.ttms.loadUI;
+package xupt.se.ttms.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

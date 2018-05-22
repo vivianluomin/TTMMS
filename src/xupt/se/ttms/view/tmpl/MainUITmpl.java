@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import java.awt.Insets;
 
 import xupt.se.ttms.view.system.*;
+import xupt.se.util.ConstantUtil;
 import xupt.se.ttms.service.LoginedUser;
 
 /**
@@ -23,10 +24,10 @@ import xupt.se.ttms.service.LoginedUser;
  *
  */
 
-public class MainUITmpl extends JFrame  {
+public class MainUITmpl extends JPanel  {
 
 	private static final long serialVersionUID = 1L;
-	private int frmWidth=1024;
+	private int frmWidth=ConstantUtil.frmWidth-200;
 	private int frmHeight=700;
 	protected ImagePanel headPan = new ImagePanel("resource/image/header.jpg");
 	protected JPanel contPan = new JPanel();
@@ -37,15 +38,15 @@ public class MainUITmpl extends JFrame  {
 
 	public MainUITmpl(){
 		this.setSize(frmWidth, frmHeight);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
-		this.setTitle("汉唐剧院票务管理系统");
+//		this.setLocationRelativeTo(null);
+//		this.setResizable(false);
+//		this.setTitle("汉唐剧院票务管理系统");
 		this.setLayout(null);
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
-				onWindowClosing();
-			}
-		});		
+//		this.addWindowListener(new WindowAdapter(){
+//			public void windowClosing(WindowEvent e){
+//				onWindowClosing();
+//			}
+//		});		
 		
 		headPan.setBounds(0, 0, frmWidth, 80);
 		headPan.setLayout(null);

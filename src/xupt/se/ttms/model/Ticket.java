@@ -1,5 +1,4 @@
 ﻿package xupt.se.ttms.model;
-
 public class Ticket {
 	
 	private int ticket_id;
