@@ -124,6 +124,7 @@ public class MainUI extends JFrame{
 
 	
 	private void ChangeRight(JPanel pane){
+		mSplite.setDividerLocation(200);
 		mSplite.setLeftComponent(leftPane);
 		mSplite.setRightComponent(pane);
 	}

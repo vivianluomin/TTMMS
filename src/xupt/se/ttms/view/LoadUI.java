@@ -84,7 +84,8 @@ public class LoadUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				new MainUI().setVisible(true);
+				LoadUI.this.setVisible(false);
 				
 			}
         	
