@@ -24,11 +24,11 @@ import xupt.se.ttms.service.LoginedUser;
  *
  */
 
-public class MainUITmpl extends JPanel  {
+public class MainUITmpl extends JFrame  {
 
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=ConstantUtil.frmWidth-200;
-	private int frmHeight=700;
+	private int frmHeight=ConstantUtil.frmHeight;
 	protected ImagePanel headPan = new ImagePanel("resource/image/header.jpg");
 	protected JPanel contPan = new JPanel();
 	protected JLabel usrLabel = new JLabel();
