@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import xupt.se.ttms.model.Seat;
@@ -20,7 +21,7 @@ import xupt.se.util.ConstantUtil;
 
 public class MovieSeatUI  extends JFrame implements SeatCallback{
 	
-	private int mWidth = ConstantUtil.frmWidth-200;
+	private int mWidth = ConstantUtil.frmWidth;
 	private int mHeight = ConstantUtil.frmHeight;
 	
 	private JPanel mContent;
@@ -37,12 +38,13 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setTitle("汉唐剧院票务管理系统");
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		});	
+//		this.addWindowListener(new WindowAdapter(){
+//			public void windowClosing(WindowEvent e){
+//				System.exit(0);
+//			}
+//		});	
 		
 		initHead();
 		initContent();
@@ -108,7 +110,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				JOptionPane.showMessageDialog(null, "购买成功"); 
 				
 			}
 			

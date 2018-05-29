@@ -65,7 +65,7 @@ public class NowShowMovieItem extends JPanel{
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				System.out.println("cccccc");
+				new MovieStudioUI().setVisible(true);
 				
 			}
 			

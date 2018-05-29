@@ -59,6 +59,8 @@ public class MovieStudioItem extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
+				new MovieSeatUI().setVisible(true);
+				
 			}
 			
 		});

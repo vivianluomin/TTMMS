@@ -24,12 +24,13 @@ public class MovieStudioUI extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setTitle("汉唐剧院票务管理系统");
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
-		this.addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent e){
-				System.exit(0);
-			}
-		});	
+//		this.addWindowListener(new WindowAdapter(){
+//			public void windowClosing(WindowEvent e){
+//				System.exit(0);
+//			}
+//		});	
 		
 		initHead();
 		initContent();
