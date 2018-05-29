@@ -1,16 +1,23 @@
 package xupt.se.ttms.view;
 
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingConstants;
 
+import xupt.se.ttms.view.sellticket.SellTicketUI;
 import xupt.se.ttms.view.studio.StudioMgrUI;
 import xupt.se.util.ConstantUtil;
 
@@ -23,6 +30,7 @@ public class MainUI extends JFrame{
 	private JButton mShowManage;
 	private JButton mShellManage;
 	private JButton mStafManage;
+	private JLabel mUser;
 	
 	private JPanel leftPane;
 	
@@ -57,12 +65,12 @@ public class MainUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				ChangeRight(new StudioMgrUI());
+				ChangeRight(new SellTicketUI());
 				
 			}
 			
 		});
-		mShellManage.setBounds(50, 50, 100, 40);
+		mShellManage.setBounds(50, 200, 100, 40);
 		mMovieManage = new JButton("影片管理");
 		mMovieManage.addActionListener(new ActionListener(){
 
@@ -73,7 +81,7 @@ public class MainUI extends JFrame{
 			}
 			
 		});
-		mMovieManage.setBounds(50, 150, 100, 40);
+		mMovieManage.setBounds(50, 300, 100, 40);
 		
 		mStudioManage = new JButton("演出厅管理");
 		mStudioManage.addActionListener(new ActionListener(){
@@ -85,7 +93,7 @@ public class MainUI extends JFrame{
 			}
 			
 		});
-		mStudioManage.setBounds(50, 250, 100, 40);
+		mStudioManage.setBounds(50, 400, 100, 40);
 		
 		mShowManage= new JButton("演出计划管理");
 		mShowManage.addActionListener(new ActionListener(){
@@ -97,7 +105,7 @@ public class MainUI extends JFrame{
 			}
 			
 		});
-		mShowManage.setBounds(50, 350, 100, 40);
+		mShowManage.setBounds(50, 500, 100, 40);
 		
 		mStafManage= new JButton("员工管理");
 		mStafManage.addActionListener(new ActionListener(){
@@ -109,16 +117,27 @@ public class MainUI extends JFrame{
 			}
 			
 		});
-		mStafManage.setBounds(50, 450, 100, 40);
+		mStafManage.setBounds(50, 600, 100, 50);
 		leftPane.setBounds(0, 0, 200, ConstantUtil.frmHeight);
+		mUser = new JLabel("vivian");
+		mUser.setFont(new Font(null,Font.BOLD,18));
+		mUser.setForeground(Color.black);
+		mUser.setIcon(new ImageIcon("resource/image/user.png"));
+		mUser.setHorizontalTextPosition(SwingConstants.CENTER);   // 水平方向文本在图片中心
+		mUser.setVerticalTextPosition(SwingConstants.BOTTOM); 
+		mUser.setHorizontalAlignment(JLabel.CENTER);
+		mUser.setBounds(50, 50, 100, 100);
+		leftPane.add(mUser);
 		leftPane.add(mShellManage);
 		leftPane.add(mMovieManage);
 		leftPane.add(mStudioManage);
 		leftPane.add(mShowManage);
 		leftPane.add(mStafManage);
+		leftPane.setBackground(new Color(255, 228, 225));
+		
 		mSplite.setLeftComponent(leftPane);
 		
-		mSplite.setRightComponent(new StudioMgrUI());
+		mSplite.setRightComponent(new SellTicketUI());
 		
 	}
 

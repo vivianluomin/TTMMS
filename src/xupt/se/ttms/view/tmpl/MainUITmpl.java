@@ -24,7 +24,7 @@ import xupt.se.ttms.service.LoginedUser;
  *
  */
 
-public class MainUITmpl extends JFrame  {
+public class MainUITmpl extends JPanel  {
 
 	private static final long serialVersionUID = 1L;
 	private int frmWidth=ConstantUtil.frmWidth-200;
