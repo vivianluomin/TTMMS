@@ -1,6 +1,7 @@
 package xupt.se.ttms.view.sellticket;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -31,6 +32,7 @@ public class NowShowMovieItem extends JPanel{
 		Name = new JLabel();
 		Name.setBounds(0, 0, frmWidth, 20);
 		Name.setHorizontalAlignment(JLabel.CENTER);
+		Name.setFont(new Font(null,Font.BOLD,14));
 		Name.setText(movieName);
 		Name.setForeground(Color.white);
 		this.add(Name, 0);

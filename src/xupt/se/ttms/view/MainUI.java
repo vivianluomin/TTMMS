@@ -117,7 +117,7 @@ public class MainUI extends JFrame{
 			}
 			
 		});
-		mStafManage.setBounds(50, 600, 100, 50);
+		mStafManage.setBounds(50, 600, 100, 40);
 		leftPane.setBounds(0, 0, 200, ConstantUtil.frmHeight);
 		mUser = new JLabel("vivian");
 		mUser.setFont(new Font(null,Font.BOLD,18));
