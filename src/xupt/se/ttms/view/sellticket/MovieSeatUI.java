@@ -30,6 +30,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	private JButton mComfirm;
 	
 	private int selectCnt = 0;
+	public List<Seat> mSelectSeats = new ArrayList();
 	
 	private List<Seat> mSeats = new ArrayList();
 	
@@ -87,11 +88,11 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			int y = i-x*10;
 			label.setBounds( y*80+150,x*80+50, 50, 50);
 			Seat seat = new Seat(x,y,label);
-			seat.setCallback(this);
+			seat.setCallback(this,this);
 			mSeats.add(seat);
-			mContent.add(label);
+			mContent.add(seat.getIcon());
 		}
-		
+		draw();
 		mSelectLabel = new JLabel();
 		mSelectLabel.setBounds(0, mHeight-180, mWidth-200, 40);
 		mSelectLabel.setFont(new Font(null,Font.BOLD,25));
@@ -110,7 +111,11 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "购买成功"); 
+				JOptionPane.showMessageDialog(null, "购买成功");
+				for(int i =0;i<mSelectSeats.size();i++){
+					mSelectSeats.get(i).setIcon(new ImageIcon("resource/image/seat_no.png"));
+					mSelectSeats.get(i).setStatu(Seat.SELECT);
+				}
 				
 			}
 			
@@ -120,6 +125,13 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		
 	
 	}
+	
+	private void draw(){
+		for(int i = 0;i<70;i++){
+		
+			mContent.add(mSeats.get(i).getIcon());
+		}
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -127,11 +139,14 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	}
 
 	@Override
-	public void selectSeat(int x, int y) {
+	public void selectSeat(Seat seat) {
 		// TODO Auto-generated method stub
 		if(selectCnt<4){
+			
+			//draw();
 			String s = mSelectLabel.getText();
-			mSelectLabel.setText(s+"  "+"("+x+","+y+")");
+			mSelectSeats.add(seat);
+			mSelectLabel.setText(s+"  "+"("+seat.getX()+","+seat.getY()+")");
 			selectCnt++;
 		}else{
 			

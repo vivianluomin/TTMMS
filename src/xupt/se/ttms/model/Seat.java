@@ -3,19 +3,22 @@ package xupt.se.ttms.model;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import xupt.se.ttms.view.sellticket.MovieSeatUI;
 import xupt.se.ttms.view.sellticket.SeatCallback;
 
 public class Seat {
 	
-	public static int NO_SELECT = 0;
-	public static int SELECT = 1;
+	public static int NO_SELECT = 1;
+	public static int SELECT = 0;
 	
 	private int x;
 	private int y;
 	private JLabel icon;
-	private int statu;
+	private int statu = Seat.NO_SELECT;
+	private MovieSeatUI mParent;
 	
 	private SeatCallback callback;
 	
@@ -56,7 +59,12 @@ public class Seat {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				callback.selectSeat(x, y);
+				if(statu!=Seat.SELECT&&mParent.mSelectSeats.size()<4){
+					icon .setIcon( new ImageIcon("resource/image/seat_select.png"));
+					callback.selectSeat(Seat.this);
+			
+				}
+				
 				
 			}
 			
@@ -83,13 +91,14 @@ public class Seat {
 	public JLabel getIcon() {
 		return icon;
 	}
-	public void setIcon(JLabel icon) {
-		this.icon = icon;
+	public void setIcon(ImageIcon icon) {
+		this.icon.setIcon(icon);
 	}
 	
 	
 	
-	public void setCallback(SeatCallback callback) {
+	public void setCallback(SeatCallback callback,MovieSeatUI parent) {
+		mParent = parent;
 		this.callback = callback;
 	}
 	
