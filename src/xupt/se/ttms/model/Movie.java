@@ -6,8 +6,30 @@ public class Movie {
 		private String movieName;//影片名称
 		private String movieDesc;//影片介绍
 		private String movieImage;//影片海报
+		private double moviePeice;
 		private int isReleased;//是否是今日上映的？如果是0就不是今天上映的如果是1 就是今天上映的
 		
+		public Movie(){
+			
+		}
+		
+		
+		public Movie(int movieId, String movieName, String movieDesc, String movieImage, double moviePeice,
+				int isReleased) {
+			
+			this.movieId = movieId;
+			this.movieName = movieName;
+			this.movieDesc = movieDesc;
+			this.movieImage = movieImage;
+			this.moviePeice = moviePeice;
+			this.isReleased = isReleased;
+		}
+		public double getMoviePeice() {
+			return moviePeice;
+		}
+		public void setMoviePeice(double moviePeice) {
+			this.moviePeice = moviePeice;
+		}
 		public int getIsReleased() {
 			return isReleased;
 		}

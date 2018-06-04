@@ -21,6 +21,8 @@ public class NowShowMovieItem extends JPanel{
 	private int frmHeight = 330;
 	private ImagePanel image;
 	private JLabel Name;
+	private String intro;
+	private int play_id;
 	
 	public NowShowMovieItem(ImagePanel Image,String movieName){
 		this.setSize(frmWidth, frmHeight);
@@ -67,7 +69,10 @@ public class NowShowMovieItem extends JPanel{
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				new MovieStudioUI().setVisible(true);
+				MovieStudioUI ui = new MovieStudioUI(play_id);
+				ui.setIntroduction(intro);
+				ui.setPlay_id(play_id);
+						ui.setVisible(true);
 				
 			}
 			
@@ -76,7 +81,25 @@ public class NowShowMovieItem extends JPanel{
 		
 	}
 	
+	public void setIntro(String intro){
+		this.intro = intro;
+	}
 	
+	public String getIntro(){
+		return intro;
+	}
+	
+	
+	
+	
+	public int getPlay_id() {
+		return play_id;
+	}
+
+	public void setPlay_id(int play_id) {
+		this.play_id = play_id;
+	}
+
 	public static void main(String[] args) {
 		ImagePanel image = new ImagePanel("resource/image/film0.jpg");
 	

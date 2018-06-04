@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -16,6 +18,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import xupt.se.ttms.dao.sellticketDAO;
+import xupt.se.ttms.model.Movie;
 import xupt.se.ttms.view.tmpl.ImagePanel;
 import xupt.se.ttms.view.tmpl.MainUITmpl;
 import xupt.se.util.ConstantUtil;
@@ -26,6 +30,7 @@ public class SellTicketUI extends JPanel{
 	private int frmHeight=ConstantUtil.frmHeight;
 	private JPanel content;
 	private JPanel head;
+	private List<Movie> ScheduelMovieList = new ArrayList<>();
 	public SellTicketUI(){
 		this.setSize(frmWidth, frmHeight);
 //		this.setLocationRelativeTo(null);
@@ -61,12 +66,17 @@ public class SellTicketUI extends JPanel{
 		content = new JPanel();
 		content.setLayout(null);
 		content.setBounds(0, 30, frmWidth, frmHeight-30);
-		for(int i = 0;i<6;i++){
-			ImagePanel image = new ImagePanel("resource/image/film0.jpg");
-			NowShowMovieItem  item = new NowShowMovieItem(image,"后来的我们");
+		ScheduelMovieList.clear();
+		ScheduelMovieList.addAll(sellticketDAO.getScheduelMovie());
+		for(int i = 0;i<ScheduelMovieList.size();i++){
+			Movie e = ScheduelMovieList.get(i);
+			ImagePanel image = new ImagePanel(e.getMovieImage());
+			NowShowMovieItem  item = new NowShowMovieItem(image,e.getMovieName());
+			item.setIntro(e.getMovieDesc());
+			item.setPlay_id(e.getMovieId());
 			int k = i/4;
 			int j = i - k*4;
-			System.out.println(k+"----"+j);
+			//System.out.println(k+"----"+j);
 			item.setLocation(j*250+30, k*340+20);
 			content.add(item);
 		}

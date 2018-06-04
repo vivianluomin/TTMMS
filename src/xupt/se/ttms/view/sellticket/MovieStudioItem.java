@@ -21,6 +21,7 @@ public class MovieStudioItem extends JPanel{
 	private JLabel mPrice;
 	private JButton mBtn;
 
+
 	
 	public MovieStudioItem(){
 		this.setSize(mWidth, mHeight);
@@ -73,6 +74,12 @@ public class MovieStudioItem extends JPanel{
 		line.setBackground(Color.GRAY);
 		this.add(line);
 		
+	}
+	
+	public void setData(int studio_id,String time,double price){
+		 mStudioName.setText("放映厅"+studio_id);
+		 mTime.setText(time);
+		 mPrice.setText(String.valueOf(price));
 	}
 
 	public static void main(String[] args) {
