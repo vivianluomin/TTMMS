@@ -20,7 +20,9 @@ public class MovieStudioItem extends JPanel{
 	private JLabel mTime;
 	private JLabel mPrice;
 	private JButton mBtn;
-
+	
+	private int mStudio_id;
+	private int mSched_id;
 
 	
 	public MovieStudioItem(){
@@ -60,7 +62,7 @@ public class MovieStudioItem extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				new MovieSeatUI().setVisible(true);
+				new MovieSeatUI(mStudio_id,mSched_id).setVisible(true);
 				
 			}
 			
@@ -76,10 +78,12 @@ public class MovieStudioItem extends JPanel{
 		
 	}
 	
-	public void setData(int studio_id,String time,double price){
+	public void setData(int studio_id,String time,double price,int sched_id){
+		mStudio_id = studio_id;
 		 mStudioName.setText("放映厅"+studio_id);
 		 mTime.setText(time);
 		 mPrice.setText(String.valueOf(price));
+		 mSched_id = sched_id;
 	}
 
 	public static void main(String[] args) {

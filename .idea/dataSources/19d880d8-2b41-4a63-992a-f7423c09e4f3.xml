@@ -1145,113 +1145,133 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="278" parent="239" name="FK_studio_seat">
+    <column id="278" parent="239" name="seat_status">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="239" name="sched_id">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="280" parent="239" name="FK_studio_seat">
       <ColNames>studio_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="279" parent="239" name="PRIMARY">
+    <index id="281" parent="239" name="FK_sched_seat">
+      <ColNames>sched_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="282" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>seat_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="280" parent="239" name="FK_studio_seat">
+    <foreign-key id="283" parent="239" name="FK_studio_seat">
       <ColNames>studio_id</ColNames>
       <RefSchemaName>ttms</RefSchemaName>
       <RefTableName>studio</RefTableName>
       <RefColNames>studio_id</RefColNames>
     </foreign-key>
-    <column id="281" parent="240" name="studio_id">
+    <foreign-key id="284" parent="239" name="FK_sched_seat">
+      <ColNames>sched_id</ColNames>
+      <RefSchemaName>ttms</RefSchemaName>
+      <RefTableName>schedules</RefTableName>
+      <RefColNames>sched_id</RefColNames>
+    </foreign-key>
+    <column id="285" parent="240" name="studio_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="240" name="studio_name">
+    <column id="286" parent="240" name="studio_name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="240" name="studio_row_count">
+    <column id="287" parent="240" name="studio_row_count">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="240" name="studio_col_count">
+    <column id="288" parent="240" name="studio_col_count">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="240" name="studio_introduction">
+    <column id="289" parent="240" name="studio_introduction">
       <Position>5</Position>
       <DataType>varchar(2000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="286" parent="240" name="PRIMARY">
+    <key id="290" parent="240" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>studio_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="287" parent="241" name="ticket_id">
+    <column id="291" parent="241" name="ticket_id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="241" name="seat_id">
+    <column id="292" parent="241" name="seat_id">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="241" name="sched_id">
+    <column id="293" parent="241" name="sched_id">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="241" name="play_id">
+    <column id="294" parent="241" name="play_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="241" name="ticket_price">
+    <column id="295" parent="241" name="ticket_price">
       <Position>5</Position>
       <DataType>decimal(10,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="292" parent="241" name="FK_sched_ticket">
+    <index id="296" parent="241" name="FK_sched_ticket">
       <ColNames>sched_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="293" parent="241" name="PRIMARY">
+    <key id="297" parent="241" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ticket_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="294" parent="241" name="FK_sched_ticket">
+    <foreign-key id="298" parent="241" name="FK_sched_ticket">
       <ColNames>sched_id</ColNames>
       <RefSchemaName>ttms</RefSchemaName>
       <RefTableName>schedules</RefTableName>
       <RefColNames>sched_id</RefColNames>
     </foreign-key>
-    <column id="295" parent="242" name="user_id">
+    <column id="299" parent="242" name="user_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="296" parent="242" name="user_account">
+    <column id="300" parent="242" name="user_account">
       <Position>2</Position>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="242" name="user_password">
+    <column id="301" parent="242" name="user_password">
       <Position>3</Position>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="298" parent="242" name="PRIMARY">
+    <key id="302" parent="242" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

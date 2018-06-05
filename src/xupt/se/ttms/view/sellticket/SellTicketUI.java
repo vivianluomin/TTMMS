@@ -68,6 +68,7 @@ public class SellTicketUI extends JPanel{
 		content.setBounds(0, 30, frmWidth, frmHeight-30);
 		ScheduelMovieList.clear();
 		ScheduelMovieList.addAll(sellticketDAO.getScheduelMovie());
+		ConstantUtil.sechduels = ScheduelMovieList;
 		for(int i = 0;i<ScheduelMovieList.size();i++){
 			Movie e = ScheduelMovieList.get(i);
 			ImagePanel image = new ImagePanel(e.getMovieImage());

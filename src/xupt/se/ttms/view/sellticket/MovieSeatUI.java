@@ -16,7 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import xupt.se.ttms.dao.sellticketDAO;
 import xupt.se.ttms.model.Seat;
+import xupt.se.ttms.model.Studio;
+import xupt.se.ttms.model.Ticket;
 import xupt.se.util.ConstantUtil;
 
 public class MovieSeatUI  extends JFrame implements SeatCallback{
@@ -27,14 +30,24 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	private JPanel mContent;
 	private JLabel mSelectLabel;
 	
+	private int mStudio_id;
+	private int mSched_id;
+	private String mTime;
+	private double mPrice;
+	
 	private JButton mComfirm;
+	
+	private int row;
+	private int clo;
 	
 	private int selectCnt = 0;
 	public List<Seat> mSelectSeats = new ArrayList();
 	
 	private List<Seat> mSeats = new ArrayList();
 	
-	public MovieSeatUI(){
+	public MovieSeatUI(int studio_id,int sched_id){
+		mStudio_id = studio_id;
+		mSched_id = sched_id;
 		this.setSize(mWidth, mHeight);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -80,17 +93,26 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		center.setHorizontalAlignment(JLabel.CENTER);
 		mContent.add(center);
 		
-		for(int i = 0;i<70;i++){
+		Studio studio = sellticketDAO.getStudioSeat(mStudio_id);
+		 row = studio.getRowCount();
+		 clo = studio.getColCount();
+		List<Ticket> list = sellticketDAO.getAStudioTicket(mSched_id);
+		for(int i = 0;i<row*clo;i++){
 			JLabel label = new JLabel();
 			label.setIcon(new ImageIcon("resource/image/seat.png"));
 			
-			int x = i/10;
-			int y = i-x*10;
-			label.setBounds( y*80+150,x*80+50, 50, 50);
+			int x = i/clo;
+			int y = i-x*clo;
+			label.setBounds( y*80+250,x*80+50, 50, 50);
 			Seat seat = new Seat(x,y,label);
 			seat.setCallback(this,this);
 			mSeats.add(seat);
 			mContent.add(seat.getIcon());
+		}
+		for(int i = 0;i<list.size();i++){
+			int roww = list.get(i).getRow();
+			int coll = list.get(i).getCol();
+			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
 		}
 		draw();
 		mSelectLabel = new JLabel();
@@ -127,15 +149,22 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	}
 	
 	private void draw(){
-		for(int i = 0;i<70;i++){
+		for(int i = 0;i<row*clo;i++){
 		
 			mContent.add(mSeats.get(i).getIcon());
 		}
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		new MovieSeatUI().setVisible(true);
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		new MovieSeatUI(s).setVisible(true);
+//	}
+	
+	
+	public void setData(int studio_id,String time,double price){
+		 mStudio_id=studio_id;
+		 mTime= time;
+		 mPrice= price;
 	}
 
 	@Override
@@ -150,9 +179,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			selectCnt++;
 		}else{
 			
-		}
-		
-		
+		}	
 		
 	}
 
