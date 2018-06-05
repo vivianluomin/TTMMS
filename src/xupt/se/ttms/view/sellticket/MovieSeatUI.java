@@ -45,6 +45,8 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	
 	private List<Seat> mSeats = new ArrayList();
 	
+	private List<Seat> mOrders = new ArrayList();
+	
 	public MovieSeatUI(int studio_id,int sched_id){
 		mStudio_id = studio_id;
 		mSched_id = sched_id;
@@ -54,11 +56,13 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		this.setTitle("汉唐剧院票务管理系统");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
-//		this.addWindowListener(new WindowAdapter(){
-//			public void windowClosing(WindowEvent e){
-//				System.exit(0);
-//			}
-//		});	
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				if(mOrders.size()>0){
+					sellticketDAO.deletOrder(mOrders);
+				}
+			}
+		});	
 		
 		initHead();
 		initContent();
@@ -105,6 +109,9 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			int y = i-x*clo;
 			label.setBounds( y*80+250,x*80+50, 50, 50);
 			Seat seat = new Seat(x,y,label);
+			seat.setSched_id(mSched_id);
+			seat.setStudio_id(mStudio_id);
+
 			seat.setCallback(this,this);
 			mSeats.add(seat);
 			mContent.add(seat.getIcon());
@@ -138,6 +145,9 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 					mSelectSeats.get(i).setIcon(new ImageIcon("resource/image/seat_no.png"));
 					mSelectSeats.get(i).setStatu(Seat.SELECT);
 				}
+				sellticketDAO.deletOrder(mOrders);
+				mOrders.clear();
+				
 				
 			}
 			
@@ -177,6 +187,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			mSelectSeats.add(seat);
 			mSelectLabel.setText(s+"  "+"("+seat.getX()+","+seat.getY()+")");
 			selectCnt++;
+			mOrders.add(seat);
 		}else{
 			
 		}	

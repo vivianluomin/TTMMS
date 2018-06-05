@@ -6,6 +6,7 @@ import java.util.List;
 
 import xupt.se.ttms.model.AMovieSechduel;
 import xupt.se.ttms.model.Movie;
+import xupt.se.ttms.model.Seat;
 import xupt.se.ttms.model.Studio;
 import xupt.se.ttms.model.Ticket;
 import xupt.se.util.DBUtil;
@@ -170,6 +171,67 @@ public class sellticketDAO {
 		
 		return tickets;
 		
+	}
+	
+	public static int addOrder(Seat seat){
+		try {
+			String sql = "insert into seat"
+					+ "(studio_id, "
+					+ "seat_row, seat_column,seat_status, "
+					+ "sched_id,limit_time)"
+					+ " values("
+					+ seat.getStudio_id()
+					+ ", "
+					+ seat.getX()
+					+ ", " + seat.getY() 
+					+ ", " + seat.getStatu()
+					+","+seat.getSched_id()
+					+","+seat.getTime()
+					+ " )";
+			DBUtil db = new DBUtil();
+			db.openConnection();
+			ResultSet rst = db.getInsertObjectIDs(sql);
+	
+			if (rst!=null && rst.first()) {
+				seat.setSeat_id(rst.getInt(1));
+			}
+			
+			sql = "insert into orders"
+					+ "(seat_id, "
+					+ "sched_id)"
+					+ " values('"
+					+ seat.getSeat_id()
+					+ ", "
+					+ seat.getSched_id()
+					+ " )";
+			
+			db.close(rst);
+			db.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		return 1;
+	}
+	
+	
+	public static void deletOrder(List<Seat> orders){
+		try {
+			DBUtil db = new DBUtil();
+			db.openConnection();
+			for(int i =0;i<orders.size();i++){
+				String sql = "delete from seat"
+						+ "where seat_id = "+orders.get(i).getSeat_id();
+				db.execCommand(sql);
+			
+			}
+			
+				db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		
+		}
 	}
 
 	public static void main(String[] args) {
