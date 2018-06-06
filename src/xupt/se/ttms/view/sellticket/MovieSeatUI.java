@@ -35,6 +35,8 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	private String mTime;
 	private double mPrice;
 	
+	private int mPlay_id;
+	
 	private JButton mComfirm;
 	
 	private int row;
@@ -101,6 +103,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		 row = studio.getRowCount();
 		 clo = studio.getColCount();
 		List<Ticket> list = sellticketDAO.getAStudioTicket(mSched_id);
+		List<Seat> orders = sellticketDAO.getAllOrder(mSched_id);
 		for(int i = 0;i<row*clo;i++){
 			JLabel label = new JLabel();
 			label.setIcon(new ImageIcon("resource/image/seat.png"));
@@ -120,6 +123,21 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			int roww = list.get(i).getRow();
 			int coll = list.get(i).getCol();
 			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+		}
+		
+		for(int i = 0;i<orders.size();i++){
+			Seat seat = orders.get(i);
+			if(seat.getTime()>=System.currentTimeMillis()){
+				
+				int roww = orders.get(i).getX();
+				int coll = orders.get(i).getY();
+				 System.out.println(roww);
+				mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+			}else{
+				sellticketDAO.deletAOrder(seat);
+				System.out.println("delete------"+seat.getTime()+"------"+System.currentTimeMillis());
+			}
+			
 		}
 		draw();
 		mSelectLabel = new JLabel();
@@ -141,10 +159,24 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "购买成功");
+				List<Ticket> tickets = new ArrayList();
 				for(int i =0;i<mSelectSeats.size();i++){
+					Seat se = mSelectSeats.get(i);
 					mSelectSeats.get(i).setIcon(new ImageIcon("resource/image/seat_no.png"));
 					mSelectSeats.get(i).setStatu(Seat.SELECT);
+					Ticket t = new Ticket();
+					t.setSeat_id(se.getSeat_id());
+					t.setRow(se.getX());
+					t.setCol(se.getY());
+					t.setSched_id(se.getSched_id());
+					t.setStudio_id(se.getStudio_id());
+					t.setTicket_price(mPrice);
+					t.setPlay_id(mPlay_id);
+					tickets.add(t);
 				}
+				
+				sellticketDAO.addTicket(tickets);
+				
 				sellticketDAO.deletOrder(mOrders);
 				mOrders.clear();
 				
@@ -171,10 +203,11 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 //	}
 	
 	
-	public void setData(int studio_id,String time,double price){
-		 mStudio_id=studio_id;
+	public void setData(String time,double price,int play_id){
+
 		 mTime= time;
 		 mPrice= price;
+		 mPlay_id = play_id;
 	}
 
 	@Override

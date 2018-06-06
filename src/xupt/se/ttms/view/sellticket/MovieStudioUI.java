@@ -78,7 +78,7 @@ public class MovieStudioUI extends JFrame {
 		for(int i = 0;i<list.size();i++){
 			AMovieSechduel a = list.get(i);
 		 MovieStudioItem item = 	new MovieStudioItem();
-		 item.setData(a.getStudio_id(), a.getSched_time(), a.getPrice(),a.getSched_id());
+		 item.setData(a.getStudio_id(), a.getSched_time(), a.getPrice(),a.getSched_id(),play_id);
 		 item.setLocation(100, i*110+20);
 			content.add(item);
 		}

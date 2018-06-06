@@ -1011,7 +1011,7 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="254" parent="236" name="seat_id">
+    <index id="254" parent="236" name="FK_orders_seat">
       <ColNames>seat_id</ColNames>
       <Type>btree</Type>
     </index>
@@ -1024,11 +1024,13 @@
       <ColNames>order_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="257" parent="236" name="orders_ibfk_1">
+    <foreign-key id="257" parent="236" name="FK_orders_seat">
       <ColNames>seat_id</ColNames>
       <RefSchemaName>ttms</RefSchemaName>
       <RefTableName>seat</RefTableName>
       <RefColNames>seat_id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="258" parent="236" name="orders_ibfk_2">
       <ColNames>sched_id</ColNames>

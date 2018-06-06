@@ -199,11 +199,13 @@ public class sellticketDAO {
 			sql = "insert into orders"
 					+ "(seat_id, "
 					+ "sched_id)"
-					+ " values('"
+					+ " values("
 					+ seat.getSeat_id()
 					+ ", "
 					+ seat.getSched_id()
 					+ " )";
+			
+			rst = db.getInsertObjectIDs(sql);
 			
 			db.close(rst);
 			db.close();
@@ -221,8 +223,10 @@ public class sellticketDAO {
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			for(int i =0;i<orders.size();i++){
-				String sql = "delete from seat"
-						+ "where seat_id = "+orders.get(i).getSeat_id();
+				int ID = orders.get(i).getSeat_id();
+				String sql = "delete from  seat ";
+				sql += " where seat_id = " + ID;
+				System.out.println(orders.get(i).getSeat_id());
 				db.execCommand(sql);
 			
 			}
@@ -230,14 +234,130 @@ public class sellticketDAO {
 				db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		
+			
 		}
+	}
+	
+	
+	public static void deletAOrder(Seat order){
+		try {
+			DBUtil db = new DBUtil();
+			db.openConnection();
+				int ID = order.getSeat_id();
+				String sql = "delete from  seat ";
+				sql += " where seat_id = " + ID;
+
+				db.execCommand(sql);
+			
+				db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+	
+	public static List<Seat> getAllOrder(int sched_id){
+		List<Seat> orders = new LinkedList<>();
+		try {
+			String sql = " select orders.seat_id,seat.seat_id,"
+					+ "seat.studio_id,"
+					+ "seat.seat_row,seat.seat_column,"
+					+ "seat_status,seat.sched_id,"
+					+ "limit_time"
+					+" from orders,seat"
+					+" where orders.sched_id = "+sched_id
+					+" and orders.seat_id = seat.seat_id;";
+		
+			DBUtil db = new DBUtil();
+			if(!db.openConnection()){
+				System.out.print("fail to connect database");
+				return null ;
+			}
+			ResultSet rst = db.execQuery(sql);
+		
+			if (rst!=null) {
+				while(rst.next()){
+					Seat seat = new Seat();
+					seat.setSeat_id(rst.getInt("seat.seat_id"));
+					seat.setStudio_id(rst.getInt("studio_id"));
+					seat.setX(rst.getInt("seat_row"));
+					seat.setY(rst.getInt("seat_column"));
+					seat.setSched_id(rst.getInt("sched_id"));
+					seat.setTime(rst.getLong("limit_time"));
+				
+					orders.add(seat);
+				}
+			}else{
+				return null;
+			}
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally{
+			
+		}
+		
+		return orders;
+	}
+	
+	public static void addTicket(List<Ticket> orders){
+		DBUtil db = new DBUtil();
+		db.openConnection();
+		try {
+			for(int i = 0;i<orders.size();i++){
+				Ticket seat = orders.get(i);
+				String sql = "insert into seat"
+						+ "(studio_id, "
+						+ "seat_row, seat_column,seat_status, "
+						+ "sched_id,limit_time)"
+						+ " values("
+						+ seat.getStudio_id()
+						+ ", "
+						+ seat.getRow()
+						+ ", " + seat.getCol() 
+						+ ", " + 1
+						+","+seat.getSched_id()
+						+","+0
+						+ " )";
+			
+				ResultSet rst = db.getInsertObjectIDs(sql);
+		
+				if (rst!=null && rst.first()) {
+					seat.setSeat_id(rst.getInt(1));
+				}
+				
+				sql = "insert into ticket"
+						+ "(seat_id, "
+						+ "sched_id,play_id,ticket_price)"
+						+ " values("
+						+ seat.getSeat_id()
+						+ ", "
+						+ seat.getSched_id()
+						+","+seat.getPlay_id()
+						+","+seat.getTicket_price()
+						+ " )";
+				
+				rst = db.getInsertObjectIDs(sql);
+				
+				db.close(rst);
+			}
+			
+			db.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
 	}
 
 	public static void main(String[] args) {
 		List<Ticket> list = getAStudioTicket(1);
 		for(Ticket t:list){
-			System.out.println(t.getRow()+" ---"+t.getCol());
+			System.out.println(t.getSeat_id()+" ---"+t.getTicket_id());
 		}
 
 	}
