@@ -1291,38 +1291,50 @@
       <DataType>decimal(10,2 digit)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="306" parent="242" name="FK_sched_ticket">
+    <index id="306" parent="242" name="FK_ticket_seat">
+      <ColNames>seat_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="307" parent="242" name="FK_sched_ticket">
       <ColNames>sched_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="307" parent="242" name="PRIMARY">
+    <key id="308" parent="242" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ticket_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="308" parent="242" name="FK_sched_ticket">
+    <foreign-key id="309" parent="242" name="FK_ticket_seat">
+      <ColNames>seat_id</ColNames>
+      <RefSchemaName>ttms</RefSchemaName>
+      <RefTableName>seat</RefTableName>
+      <RefColNames>seat_id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="310" parent="242" name="FK_sched_ticket">
       <ColNames>sched_id</ColNames>
       <RefSchemaName>ttms</RefSchemaName>
       <RefTableName>schedules</RefTableName>
       <RefColNames>sched_id</RefColNames>
     </foreign-key>
-    <column id="309" parent="243" name="user_id">
+    <column id="311" parent="243" name="user_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="243" name="user_account">
+    <column id="312" parent="243" name="user_account">
       <Position>2</Position>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="243" name="user_password">
+    <column id="313" parent="243" name="user_password">
       <Position>3</Position>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="312" parent="243" name="PRIMARY">
+    <key id="314" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

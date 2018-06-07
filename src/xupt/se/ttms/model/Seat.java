@@ -148,7 +148,7 @@ public class Seat {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(statu!=Seat.SELECT&&mParent.mSelectSeats.size()<4){
+				if(statu!=Seat.SELECT&&statu!=ORDER&&mParent.mSelectSeats.size()<4){
 					icon .setIcon( new ImageIcon("resource/image/seat_select.png"));
 					Seat.this.setStatu(ORDER);
 					Seat.this.setTime(System.currentTimeMillis()+1*60*1000);

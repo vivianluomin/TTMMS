@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 	private JPanel mContent;
 	private JLabel mSelectLabel;
 	
+	private JLabel mRefresh;
+	
 	private int mStudio_id;
 	private int mSched_id;
 	private String mTime;
@@ -55,7 +59,7 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		this.setSize(mWidth, mHeight);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setTitle("汉唐剧院票务管理系统");
+		this.setTitle("奥斯不卡票务管理系统");
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(null);
 		this.addWindowListener(new WindowAdapter(){
@@ -99,46 +103,50 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		center.setHorizontalAlignment(JLabel.CENTER);
 		mContent.add(center);
 		
-		Studio studio = sellticketDAO.getStudioSeat(mStudio_id);
-		 row = studio.getRowCount();
-		 clo = studio.getColCount();
-		List<Ticket> list = sellticketDAO.getAStudioTicket(mSched_id);
-		List<Seat> orders = sellticketDAO.getAllOrder(mSched_id);
-		for(int i = 0;i<row*clo;i++){
-			JLabel label = new JLabel();
-			label.setIcon(new ImageIcon("resource/image/seat.png"));
-			
-			int x = i/clo;
-			int y = i-x*clo;
-			label.setBounds( y*80+250,x*80+50, 50, 50);
-			Seat seat = new Seat(x,y,label);
-			seat.setSched_id(mSched_id);
-			seat.setStudio_id(mStudio_id);
+		mRefresh = new JLabel();
+		mRefresh.setBounds(mWidth-200, 30, 50, 50);
+		mRefresh.setIcon(new ImageIcon("resource/image/refresh1.png"));
+		mRefresh.addMouseListener(new MouseListener(){
 
-			seat.setCallback(this,this);
-			mSeats.add(seat);
-			mContent.add(seat.getIcon());
-		}
-		for(int i = 0;i<list.size();i++){
-			int roww = list.get(i).getRow();
-			int coll = list.get(i).getCol();
-			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
-		}
-		
-		for(int i = 0;i<orders.size();i++){
-			Seat seat = orders.get(i);
-			if(seat.getTime()>=System.currentTimeMillis()){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				
-				int roww = orders.get(i).getX();
-				int coll = orders.get(i).getY();
-				 System.out.println(roww);
-				mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
-			}else{
-				sellticketDAO.deletAOrder(seat);
-				System.out.println("delete------"+seat.getTime()+"------"+System.currentTimeMillis());
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Refresh();
+				mSelectLabel.setText("");
+				
+				
+				//draw();
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 			
-		}
+		});
+		
+		mContent.add(mRefresh);
+		
+		search();
 		draw();
 		mSelectLabel = new JLabel();
 		mSelectLabel.setBounds(0, mHeight-180, mWidth-200, 40);
@@ -158,6 +166,23 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(mOrders.size()<=0) {
+					JOptionPane.showMessageDialog(null, "订单超时，请重新购买");
+					return;
+				}
+				List<Seat> orders = sellticketDAO.getAllOrder(mSched_id);
+				if(orders.size()<=0){
+					JOptionPane.showMessageDialog(null, "订单超时，请重新购买");
+					Refresh();
+					return;
+				}
+				for(int i =0;i<orders.size()&&i<mOrders.size();i++){
+					if(orders.get(i).getSeat_id()!= mOrders.get(i).getSeat_id()){
+						JOptionPane.showMessageDialog(null, "订单超时，请重新购买");
+						Refresh();
+						return;
+					}
+				}
 				JOptionPane.showMessageDialog(null, "购买成功");
 				List<Ticket> tickets = new ArrayList();
 				for(int i =0;i<mSelectSeats.size();i++){
@@ -188,6 +213,104 @@ public class MovieSeatUI  extends JFrame implements SeatCallback{
 		this.add(mContent);
 		
 	
+	}
+	
+	private void search(){
+		mSeats.clear();
+		Studio studio = sellticketDAO.getStudioSeat(mStudio_id);
+		 row = studio.getRowCount();
+		 clo = studio.getColCount();
+		List<Ticket> list = sellticketDAO.getAStudioTicket(mSched_id);
+		List<Seat> orders = sellticketDAO.getAllOrder(mSched_id);
+		for(int i = 0;i<row*clo;i++){
+			JLabel label = new JLabel();
+			label.setIcon(new ImageIcon("resource/image/seat.png"));
+			
+			int x = i/clo;
+			int y = i-x*clo;
+			label.setBounds( y*80+250,x*80+50, 50, 50);
+			Seat seat = new Seat(x,y,label);
+			seat.setSched_id(mSched_id);
+			seat.setStudio_id(mStudio_id);
+
+			seat.setCallback(this,this);
+			mSeats.add(seat);
+			//mContent.add(seat.getIcon());
+		}
+		for(int i = 0;i<list.size();i++){
+			int roww = list.get(i).getRow();
+			int coll = list.get(i).getCol();
+			mSeats.get(roww*clo+coll).setStatu(Seat.SELECT);
+			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+		}
+		
+		for(int i = 0;i<orders.size();i++){
+			Seat seat = orders.get(i);
+			if(seat.getTime()>=System.currentTimeMillis()){
+				
+				int roww = orders.get(i).getX();
+				int coll = orders.get(i).getY();
+				 System.out.println(roww);
+				 mSeats.get(roww*clo+coll).setStatu(Seat.ORDER);
+				mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+			}else{
+				sellticketDAO.deletAOrder(seat);
+				System.out.println("delete------"+seat.getTime()+"------"+System.currentTimeMillis());
+			}
+			
+		}
+	}
+	
+	private void Refresh(){
+		//if(mOrders.size()<=0) return;
+		sellticketDAO.deletOrder(mOrders);
+		//search();
+		for(int i = 0;i<mOrders.size();i++){
+			int roww = mOrders.get(i).getX();
+			int coll = mOrders.get(i).getY();
+			 System.out.println(roww);
+			 mSeats.get(roww*clo+coll).setStatu(Seat.NO_SELECT);
+			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat.png"));
+		}
+		
+		//search();
+		//draw();
+//
+		for(int i = 0;i<row*clo;i++){
+			mSeats.get(i).setStatu(Seat.NO_SELECT);
+			mSeats.get(i).setIcon(new ImageIcon("resource/image/seat.png"));
+			//mContent.add(seat.getIcon());
+		}
+		List<Ticket> list = sellticketDAO.getAStudioTicket(mSched_id);
+		for(int i = 0;i<list.size();i++){
+			int roww = list.get(i).getRow();
+			int coll = list.get(i).getCol();
+			mSeats.get(roww*clo+coll).setStatu(Seat.SELECT);
+			mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+		}
+		
+		List<Seat> orders = sellticketDAO.getAllOrder(mSched_id);
+		for(int i = 0;i<orders.size();i++){
+			Seat seat = orders.get(i);
+			if(seat.getTime()>=System.currentTimeMillis()){
+				
+				int roww = orders.get(i).getX();
+				int coll = orders.get(i).getY();
+				 System.out.println(roww);
+				 mSeats.get(roww*clo+coll).setStatu(Seat.ORDER);
+				mSeats.get(roww*clo+coll).setIcon(new ImageIcon("resource/image/seat_no.png"));
+				
+			}else{
+				sellticketDAO.deletAOrder(seat);
+				System.out.println("delete------"+seat.getTime()+"------"+System.currentTimeMillis());
+			}
+			
+		}
+				
+		mOrders.clear();
+		mSelectSeats.clear();
+		selectCnt = 0;
+			
 	}
 	
 	private void draw(){

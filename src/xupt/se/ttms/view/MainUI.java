@@ -37,7 +37,7 @@ public class MainUI extends JFrame{
 	public MainUI(){
 		this.setSize(ConstantUtil.frmWidth, ConstantUtil.frmHeight);
 		this.setResizable(false);
-		this.setTitle("汉唐剧院票务管理系统");
+		this.setTitle("奥斯没卡票务管理系统");
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.addWindowListener(new WindowAdapter(){
